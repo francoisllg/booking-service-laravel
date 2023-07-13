@@ -13,15 +13,16 @@ class AccommodationFactory extends Factory
         return [
             'name'         => $this->faker->name(),
             'type'         => $this->faker->randomElement(['HOUSE', 'FLAT', 'VILLA']),
+            'distribution' => json_encode([
+                'living_rooms' => $this->faker->numberBetween(1, 10),
+                'bedrooms'     => $this->faker->numberBetween(1, 10),
+                'beds'         => $this->faker->numberBetween(5, 10),
+            ]),
+            'max_guests'   => $this->faker->numberBetween(1, 5),
             'city'         => $this->faker->city(),
             'address'      => $this->faker->address(),
             'country'      => $this->faker->country(),
             'postal_code'  => $this->faker->postcode(),
-            'max_guests'   => $this->faker->numberBetween(1, 10),
-            'distribution' => json_encode([
-                'living_rooms' => $this->faker->numberBetween(1, 10),
-                'bedrooms'     => ["{'beds' => 1},{'beds'=>1}"],
-            ]),
 
         ];
     }

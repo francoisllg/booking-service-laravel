@@ -9,21 +9,16 @@ use Illuminate\Http\JsonResponse;
 trait ApiResponserTrait
 {
 
-    protected function successResponse($data, string $message = null, int $code = 200): JsonResponse
+    protected function successResponse($data, int $code = 200): JsonResponse
     {
-        return new JsonResponse([
-            'status'  => 'Success',
-            'message' => $message,
-            'data'    => $data,
-        ], $code);
+        return new JsonResponse($data, $code);
     }
 
-    protected function errorResponse(string $message = null, int $code = 400): JsonResponse
+    protected function errorResponse($message = null, int $code = 400): JsonResponse
     {
         return new JsonResponse([
             'status'  => 'Error',
             'message' => $message,
-            'data'    => null,
         ], $code);
     }
 }

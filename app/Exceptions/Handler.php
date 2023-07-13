@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use ErrorException;
 use Throwable;
 use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
@@ -10,7 +11,7 @@ use App\Traits\Http\Controllers\Api\ApiResponserTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Symfony\Component\Routing\Exception\MethodNotAllowedException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -70,9 +71,13 @@ class Handler extends ExceptionHandler
         return $this->errorResponse($message, Response::HTTP_NOT_FOUND);
       }
 
-      if($exception instanceof MethodNotAllowedException){
+      if($exception instanceof MethodNotAllowedHttpException){
         $message = 'The specified method for the request is invalid';
         return $this->errorResponse($message, Response::HTTP_METHOD_NOT_ALLOWED);
+      }
+
+      if($exception instanceof ErrorException){
+        return $this->errorResponse($exception->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
       }
 
       return parent::render($request, $exception);
@@ -80,6 +85,6 @@ class Handler extends ExceptionHandler
 
     protected function convertValidationExceptionToResponse(ValidationException $e, $request){
         $errors = $e->validator->errors()->getMessages();
-        return $this->errorResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
+        return $this->errorResponse($errors, Response::HTTP_BAD_REQUEST);
     }
 }
