@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\Accommodation\AccommodationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,3 +14,11 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+
+Route::group([
+    'prefix' => 'v1'
+], function () {
+    //Accommodations
+    Route::post('/user/{user_id}/accommodations', [AccommodationController::class, 'create']);
+});

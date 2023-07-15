@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Accommodation\AccommodationTypes;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,11 +14,12 @@ class CreateAccommodationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('accommodations', function (Blueprint $table) {
+        $accommodationTypes = AccommodationTypes::getAll();
+        Schema::create('accommodations', function (Blueprint $table)use ($accommodationTypes) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('name',155);
-            $table->enum('type',['HOUSE', 'FLAT', 'VILLA']);
+            $table->string('name',150);
+            $table->enum('type',$accommodationTypes);
             $table->string('city');
             $table->string('address');
             $table->string('country');
