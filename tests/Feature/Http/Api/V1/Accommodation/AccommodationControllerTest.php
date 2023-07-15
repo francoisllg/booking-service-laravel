@@ -78,7 +78,8 @@ class AccommodationControllerTest extends TestCase
      * @test
      */
     public function user_cannot_create_an_accommodation_if_the_validation_fails()
-    { //arrange
+    {
+        //arrange
         $userId = 1;
         $newAccommodationData = Accommodation::factory()->make([
             'name' => '',
@@ -111,6 +112,37 @@ class AccommodationControllerTest extends TestCase
 
         //act
         $result = $this->postJson("api/v1/user/{$userId}/accommodations", $newAccommodationData);
+
+        //assert
+        $result->assertStatus(400);
+    }
+
+    /**
+     * @test
+     */
+    public function user_can_get_all_accommodations_updated_on_weekends_by_user_id()
+    {
+        //arrange
+        $userId = 1;
+
+        //act
+        $result = $this->get("api/v1/user/{$userId}/accommodations");
+
+        //assert
+        $result->assertStatus(200);
+        $this->assertCount(3, $result->json());
+    }
+
+    /**
+     * @test
+     */
+    public function user_cannot_get_all_accommodations_updated_on_weekends_by_user_id_if_the_user_does_not_exist()
+    {
+        //arrange
+        $userId = 'vddj';
+
+        //act
+        $result = $this->get("api/v1/user/{$userId}/accommodations");
 
         //assert
         $result->assertStatus(400);

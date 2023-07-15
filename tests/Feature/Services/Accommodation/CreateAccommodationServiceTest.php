@@ -6,7 +6,6 @@ namespace Tests\Feature\Services\Accommodation;
 
 use Tests\TestCase;
 use App\Models\Accommodation\Accommodation;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Services\Accommodation\CreateAccommodationService;
 
 class CreateAccommodationServiceTest extends TestCase

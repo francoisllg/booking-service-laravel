@@ -17,6 +17,10 @@ class AccommodationResource extends JsonResource
             unset($data['name']);
         }
 
+        if(isset($data['updated_at'])){
+            $data['updated_at'] = strtok($data['updated_at'],' ');
+        }
+
         return $data;
     }
 }
