@@ -23,7 +23,7 @@ class CreateAccommodationRequest extends FormRequest
             'trade_name'   => 'required|string|max:150',
             'type'         => "required|in:$accommodationTypes",
             'distribution' => ['required',new ValidDistributionRule],
-            'max_guests'   => ['required','integer', new MaxGuestsRule],
+            'max_guests'   => ['required','integer','min:1', new MaxGuestsRule],
             'city'         => 'sometimes|string',
             'address'      => 'sometimes|string',
             'country'      => 'sometimes|string',
