@@ -2,8 +2,9 @@
 
 namespace App\Exceptions;
 
-use ErrorException;
+use TypeError;
 use Throwable;
+use ErrorException;
 use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -78,6 +79,10 @@ class Handler extends ExceptionHandler
 
       if($exception instanceof ErrorException){
         return $this->errorResponse($exception->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+      }
+
+      if($exception instanceof TypeError){
+        return $this->errorResponse('The type of the argument is incorrect', Response::HTTP_BAD_REQUEST);
       }
 
       return parent::render($request, $exception);

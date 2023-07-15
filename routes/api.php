@@ -21,4 +21,5 @@ Route::group([
 ], function () {
     //Accommodations
     Route::post('/user/{user_id}/accommodations', [AccommodationController::class, 'create']);
+    Route::get('/user/{user_id}/accommodations', [AccommodationController::class, 'getAllByUserId']);
 });
