@@ -68,7 +68,28 @@ abstract class BaseCsvRepository
         $this->data = $index;
     }
 
-    protected function formatData(array $data): array
+    protected function formatAccommodationData(array $accommodation):array
+    {
+        $formattedAccommodation = [];
+
+        foreach ($accommodation as $key => $value) {
+            if (is_numeric($value)) {
+                $value = intval($value);
+            }
+            $newKey = str_replace('accommodation_', '', $key);
+            if ($key == 'last_update')
+                $newKey = 'updated_at';
+
+            if ($newKey == 'distribution') {
+                $formattedAccommodation[$newKey] = $this->formatDistributionData($value);
+            } else {
+                $formattedAccommodation[$newKey] = $value;
+            }
+        }
+        return $formattedAccommodation;
+    }
+
+    protected function formatAccommodationCollection(array $data): array
     {
         $accommodations = $data['accommodations'] ?? [];
         $formattedData = [
@@ -78,22 +99,7 @@ abstract class BaseCsvRepository
         ];
 
         foreach ($accommodations as $accommodation) {
-            $formattedAccommodation = [];
-            foreach ($accommodation as $key => $value) {
-                if (is_numeric($value)) {
-                    $value = intval($value);
-                }
-                $newKey = str_replace('accommodation_', '', $key);
-                if ($key == 'last_update')
-                    $newKey = 'updated_at';
-
-                if ($newKey == 'distribution') {
-                    $formattedAccommodation[$newKey] = $this->formatDistributionData($value);
-                } else {
-                    $formattedAccommodation[$newKey] = $value;
-                }
-            }
-            $formattedData['accommodations'][] = $formattedAccommodation;
+            $formattedData['accommodations'][] = $this->formatAccommodationData($accommodation);
         }
 
         return $formattedData;

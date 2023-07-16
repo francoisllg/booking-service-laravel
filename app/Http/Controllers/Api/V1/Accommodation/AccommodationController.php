@@ -7,6 +7,7 @@ use Illuminate\Http\JsonResponse;
 use App\Services\User\GetUserByIdService;
 use App\Http\Controllers\Api\ApiController;
 use App\Services\Accommodation\CreateAccommodationService;
+use App\Services\Accommodation\UpdateAccommodationService;
 use App\Http\Resources\Accommodation\AccommodationResource;
 use App\Http\Requests\Accommodation\CreateAccommodationRequest;
 use App\Http\Requests\Accommodation\UpdateAccommodationRequest;
@@ -17,15 +18,18 @@ class AccommodationController extends ApiController
 
     private GetUserByIdService $getUserByIdService;
     private CreateAccommodationService $createAccommodationService;
+    private UpdateAccommodationService $updateAccommodationService;
     private GetAllAccommodationsUpdatedOnWeekendsByUserIdService $getAllAccommodationsUpdatedOnWeekendsByUserIdService;
 
     public function __construct(
         GetUserByIdService $get_user_by_id_service,
         CreateAccommodationService $create_accommodation_service,
+        UpdateAccommodationService $update_accommodation_service,
         GetAllAccommodationsUpdatedOnWeekendsByUserIdService $get_all_accommodations_updated_on_weekends_by_user_id_service
     ) {
-        $this->getUserByIdService = $get_user_by_id_service;
+        $this->getUserByIdService         = $get_user_by_id_service;
         $this->createAccommodationService = $create_accommodation_service;
+        $this->updateAccommodationService = $update_accommodation_service;
         $this->getAllAccommodationsUpdatedOnWeekendsByUserIdService = $get_all_accommodations_updated_on_weekends_by_user_id_service;
     }
 
@@ -44,7 +48,10 @@ class AccommodationController extends ApiController
     public function update(UpdateAccommodationRequest $request, int $user_id, int $accommodation_id): JsonResponse
     {
         try {
-
+            $updatedAccomodationData = $request->validated();
+            $updatedAccomodationData['user_id'] = $user_id;
+            $updatedAccommodation    = $this->updateAccommodationService->handle($accommodation_id, $updatedAccomodationData);
+            return $this->successResponse(new AccommodationResource($updatedAccommodation), Response::HTTP_OK);
         } catch (\Throwable $e) {
             return $this->errorResponse($e->getMessage(), $e->getCode());
         }

@@ -147,4 +147,43 @@ class AccommodationControllerTest extends TestCase
         //assert
         $result->assertStatus(400);
     }
+
+    /**
+     * @test
+     */
+    public function user_can_update_an_accommodation_of_its_own()
+    {
+        //arrange
+        $userId          = 275;
+        $accommodationId = 1;
+        $updatedAccommodationData = [
+            'id' => 1,
+            'name' => 'Updated name',
+            'type' => 'HOUSE',
+            'city' => 'Updated city',
+            'address' => 'Updated address',
+            'country' => 'Updated country',
+            'postal_code' => 'Updated postal code',
+            'max_guests' => 2,
+        ];
+
+        //act
+        $result = $this->put("api/v1/user/{$userId}/accommodations/{$accommodationId}", $updatedAccommodationData);
+
+        //assert
+        $result->assertStatus(200);
+        $this->assertEquals($result['updated_at'], date('Y-m-d'));
+        $result->assertJsonStructure([
+            'id',
+            'trade_name',
+            'type',
+            'max_guests',
+            'city',
+            'address',
+            'country',
+            'postal_code',
+            'distribution',
+            'updated_at',
+        ]);
+    }
 }

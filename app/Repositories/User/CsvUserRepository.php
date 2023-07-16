@@ -15,7 +15,7 @@ class CsvUserRepository extends BaseCsvRepository implements UserRepositoryInter
         return [];
     }
 
-    public function update(array $updated_user_data): array
+    public function update(int $user_id, array $updated_user_data): array
     {
         //default implementation
         return [];

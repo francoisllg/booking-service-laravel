@@ -8,4 +8,5 @@ use App\Interfaces\Shared\Entity\BaseEntityInterface;
 interface AccommodationRepositoryInterface extends BaseEntityInterface
 {
     public function getAllByUserId(int $user_id): array;
+    public function getByIdAndUserId(int $accommodation_id, int $user_id): array;
 }
