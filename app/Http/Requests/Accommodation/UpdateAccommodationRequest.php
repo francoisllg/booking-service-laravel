@@ -21,7 +21,7 @@ class UpdateAccommodationRequest extends FormRequest
         $accommodationTypes = implode(',', AccommodationTypes::getAll());
 
         $rules = [
-            'id' => 'required|integer',
+            'id' => 'required|integer|in:'.request()->route('accommodation_id'),
             'trade_name'  => 'sometimes|string|max:150',
             'type'        => "sometimes|in:$accommodationTypes",
             'city'        => 'sometimes|string',

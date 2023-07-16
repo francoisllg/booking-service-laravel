@@ -11,7 +11,7 @@ class GetAllAccommodationsUpdatedOnWeekendsByUserIdServiceTest extends TestCase
 {
 
     private $getAllAccommodationsUpdatedOnWeekendsByUserIdService;
-    public function setUp():void
+    public function setUp(): void
     {
         parent::setUp();
         $this->getAllAccommodationsUpdatedOnWeekendsByUserIdService = $this->app->make(GetAllAccommodationsUpdatedOnWeekendsByUserIdService::class);
@@ -31,7 +31,7 @@ class GetAllAccommodationsUpdatedOnWeekendsByUserIdServiceTest extends TestCase
         //assert
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
-        $this->assertCount(3,$result);
+        $this->assertCount(3, $result);
 
     }
 }

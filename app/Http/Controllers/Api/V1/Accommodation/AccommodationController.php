@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api\V1\Accommodation;
 
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
-use App\Services\User\GetUserByIdService;
 use App\Http\Controllers\Api\ApiController;
 use App\Services\Accommodation\CreateAccommodationService;
 use App\Services\Accommodation\UpdateAccommodationService;
@@ -15,19 +14,15 @@ use App\Services\Accommodation\GetAllAccommodationsUpdatedOnWeekendsByUserIdServ
 
 class AccommodationController extends ApiController
 {
-
-    private GetUserByIdService $getUserByIdService;
     private CreateAccommodationService $createAccommodationService;
     private UpdateAccommodationService $updateAccommodationService;
     private GetAllAccommodationsUpdatedOnWeekendsByUserIdService $getAllAccommodationsUpdatedOnWeekendsByUserIdService;
 
     public function __construct(
-        GetUserByIdService $get_user_by_id_service,
         CreateAccommodationService $create_accommodation_service,
         UpdateAccommodationService $update_accommodation_service,
         GetAllAccommodationsUpdatedOnWeekendsByUserIdService $get_all_accommodations_updated_on_weekends_by_user_id_service
     ) {
-        $this->getUserByIdService         = $get_user_by_id_service;
         $this->createAccommodationService = $create_accommodation_service;
         $this->updateAccommodationService = $update_accommodation_service;
         $this->getAllAccommodationsUpdatedOnWeekendsByUserIdService = $get_all_accommodations_updated_on_weekends_by_user_id_service;
@@ -50,7 +45,7 @@ class AccommodationController extends ApiController
         try {
             $updatedAccomodationData = $request->validated();
             $updatedAccomodationData['user_id'] = $user_id;
-            $updatedAccommodation    = $this->updateAccommodationService->handle($accommodation_id, $updatedAccomodationData);
+            $updatedAccommodation = $this->updateAccommodationService->handle($accommodation_id, $updatedAccomodationData);
             return $this->successResponse(new AccommodationResource($updatedAccommodation), Response::HTTP_OK);
         } catch (\Throwable $e) {
             return $this->errorResponse($e->getMessage(), $e->getCode());
@@ -60,14 +55,10 @@ class AccommodationController extends ApiController
     public function getAllByUserId(int $user_id): JsonResponse
     {
         try {
-            if (empty($this->getUserByIdService->handle($user_id))) {
-                return $this->errorResponse('User not found', Response::HTTP_BAD_REQUEST);
-            }
             $accommodations = $this->getAllAccommodationsUpdatedOnWeekendsByUserIdService->handle($user_id);
             return $this->successResponse(AccommodationResource::collection($accommodations), Response::HTTP_OK);
         } catch (\Throwable $e) {
             return $this->errorResponse($e->getMessage(), $e->getCode());
         }
     }
-
 }
