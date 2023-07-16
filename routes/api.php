@@ -14,12 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-Route::group([
-    'prefix' => 'v1',
-], function () {
-    //Accommodations
-    Route::post('/user/{user_id}/accommodations', [AccommodationController::class, 'create']);
-    Route::get('/user/{user_id}/accommodations', [AccommodationController::class, 'getAllByUserId']);
-    Route::put('/user/{user_id}/accommodations/{accommodation_id}', [AccommodationController::class, 'update']);
-});
+//Accommodations
+Route::post('/user/{user_id}/accommodations', [AccommodationController::class, 'create']);
+Route::get('/user/{user_id}/accommodations', [AccommodationController::class, 'getAllByUserId']);
+Route::put('/user/{user_id}/accommodations/{accommodation_id}', [AccommodationController::class, 'update']);

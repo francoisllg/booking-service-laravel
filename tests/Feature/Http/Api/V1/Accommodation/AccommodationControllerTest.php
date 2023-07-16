@@ -23,7 +23,7 @@ class AccommodationControllerTest extends TestCase
         unset($newAccommodationData['name']);
 
         //act
-        $result = $this->postJson("api/v1/user/{$userId}/accommodations", $newAccommodationData);
+        $result = $this->postJson("user/{$userId}/accommodations", $newAccommodationData);
 
         //assert
         $result->assertStatus(201);
@@ -60,7 +60,7 @@ class AccommodationControllerTest extends TestCase
         ];
 
         //act
-        $result = $this->postJson("api/v1/user/{$userId}/accommodations", $newAccommodationData);
+        $result = $this->postJson("user/{$userId}/accommodations", $newAccommodationData);
 
         //assert
         $result->assertStatus(201);
@@ -87,7 +87,7 @@ class AccommodationControllerTest extends TestCase
         ])->toArray();
 
         //act
-        $result = $this->postJson("api/v1/user/{$userId}/accommodations", $newAccommodationData);
+        $result = $this->postJson("user/{$userId}/accommodations", $newAccommodationData);
 
         //assert
         $result->assertStatus(400);
@@ -111,7 +111,7 @@ class AccommodationControllerTest extends TestCase
         ];
 
         //act
-        $result = $this->postJson("api/v1/user/{$userId}/accommodations", $newAccommodationData);
+        $result = $this->postJson("user/{$userId}/accommodations", $newAccommodationData);
 
         //assert
         $result->assertStatus(400);
@@ -126,7 +126,7 @@ class AccommodationControllerTest extends TestCase
         $userId = 1;
 
         //act
-        $result = $this->get("api/v1/user/{$userId}/accommodations");
+        $result = $this->get("user/{$userId}/accommodations");
 
         //assert
         $result->assertStatus(200);
@@ -142,7 +142,7 @@ class AccommodationControllerTest extends TestCase
         $userId = 'vddj';
 
         //act
-        $result = $this->get("api/v1/user/{$userId}/accommodations");
+        $result = $this->get("user/{$userId}/accommodations");
 
         //assert
         $result->assertStatus(400);
@@ -168,7 +168,7 @@ class AccommodationControllerTest extends TestCase
         ];
 
         //act
-        $result = $this->put("api/v1/user/{$userId}/accommodations/{$accommodationId}", $updatedAccommodationData);
+        $result = $this->put("user/{$userId}/accommodations/{$accommodationId}", $updatedAccommodationData);
 
         //assert
         $result->assertStatus(200);
