@@ -12,7 +12,7 @@ class CsvAccommodationRepository extends BaseCsvRepository implements Accommodat
 
     public function create(array $new_accommodation_data): array
     {
-        $result = array_merge(['id' => 1], $new_accommodation_data);
+        $result = array_merge(['id' => 10001], $new_accommodation_data);
         $result['updated_at'] = now()->toDateTimeString();
         return $result;
     }

@@ -9,7 +9,7 @@ use Cache;
 abstract class BaseCsvRepository
 {
     protected array $data = [];
-    const CSV_PATH = 'app/csv/data.csv';
+    const CSV_PATH  = 'app/csv/data.csv';
     const CACHE_KEY = 'csv_data_cache';
     const LAST_MODIFIED_CACHE_KEY = 'csv_last_modified';
 
