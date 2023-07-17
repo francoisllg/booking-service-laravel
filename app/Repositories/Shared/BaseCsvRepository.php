@@ -46,7 +46,6 @@ abstract class BaseCsvRepository
 
             while (($data = fgetcsv($handle, 0, ';')) !== false) {
                 $user = trim($data[1], "\"");
-                $property = trim($data[2], "\"");
 
                 if (!isset($index[$user])) {
                     $index[$user] = array(
