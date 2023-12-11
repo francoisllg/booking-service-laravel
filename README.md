@@ -1,5 +1,5 @@
 
-# Challenge: Accommodation management service  
+#Accommodation management service  
 
 Dockeried Laravel app to create, update and list accommodations of different users, taking as database a CSV file.
 
